@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>उपनयन संस्कार निमंत्रण — आशुतोष, आयुष एवं आरव कुमार</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --maroon: #6B1515;
+  --maroon2: #8B1A1A;
+  --gold: #C8960C;
+  --gold2: #E8B84B;
+  --gold3: #F9D97A;
+  --saffron: #D4620A;
+  --cream: #FDF6E3;
+  --cream2: #F5E6C0;
+  --text: #2C1A0E;
+  --text2: #5C3318;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: #0D0700;
+  overflow-x: hidden;
+  font-family: 'Noto Serif Devanagari', serif;
+}
+
+/* ── INTRO SCREEN ── */
+#intro {
+  position: fixed; inset: 0;
+  background: #0D0700;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 1000;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+#intro.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.intro-om {
+  font-size: clamp(5rem, 20vw, 9rem);
+  color: var(--gold2);
+  animation: omPulse 2.4s ease-in-out infinite;
+  text-shadow:
+    0 0 20px rgba(249,217,122,1),
+    0 0 60px rgba(200,150,12,0.9),
+    0 0 120px rgba(200,150,12,0.5),
+    0 0 200px rgba(200,150,12,0.2);
+  line-height: 1;
+  position: relative;
+}
+
+/* Radiant halo behind the OM */
+.intro-om-wrap {
+  position: relative;
+  display: inline-block;
+}
+.intro-om-wrap::before {
+  content: 'ॐ';
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  font-size: inherit;
+  line-height: inherit;
+  text-align: center;
+  filter: blur(28px);
+  opacity: 0.7;
+  background: linear-gradient(135deg, #F9D97A, #E8B84B, #D4620A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: omHalo 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes omPulse {
+  0%,100% {
+    transform: scale(1);
+    text-shadow:
+      0 0 20px rgba(249,217,122,0.9),
+      0 0 60px rgba(200,150,12,0.7),
+      0 0 120px rgba(200,150,12,0.3),
+      0 0 200px rgba(200,150,12,0.1);
+  }
+  50% {
+    transform: scale(1.07);
+    text-shadow:
+      0 0 30px rgba(255,255,200,1),
+      0 0 80px rgba(249,217,122,1),
+      0 0 140px rgba(200,150,12,0.8),
+      0 0 260px rgba(200,150,12,0.4),
+      0 0 400px rgba(200,150,12,0.15);
+  }
+}
+@keyframes omHalo {
+  0%,100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 0.85; transform: scale(1.15); }
+}
+
+.intro-sub {
+  color: var(--gold3);
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-top: 16px;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.8s forwards;
+}
+
+.intro-btn {
+  margin-top: 48px;
+  padding: 14px 40px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold3);
+  font-family: 'Noto Serif Devanagari', serif;
+  font-size: 1rem;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.4s forwards;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.intro-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--gold);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+  z-index: -1;
+}
+
+.intro-btn:hover { color: #0D0700; }
+.intro-btn:hover::before { transform: translateX(0); }
+
+/* ── PARTICLES ── */
+#particles {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  animation: floatParticle linear infinite;
+  opacity: 0;
+}
+
+@keyframes floatParticle {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── MAIN PAGE ── */
+#main {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+}
+
+#main.visible { opacity: 1; }
+
+/* ── BACKGROUND ── */
+.bg-pattern {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(107,21,21,0.35) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(107,21,21,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(200,150,12,0.04) 0%, transparent 70%),
+    #0D0700;
+  z-index: 0;
+}
+
+.bg-grid {
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(200,150,12,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,150,12,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 0;
+}
+
+/* ── CARD WRAPPER ── */
+.page {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+/* ── SECTION ANIMATIONS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.shown { opacity: 1; transform: translateY(0); }
+
+/* ── HEADER ── */
+.header {
+  text-align: center;
+  padding: 50px 20px 30px;
+  position: relative;
+}
+
+.header-om {
+  font-size: clamp(3.5rem, 12vw, 5.5rem);
+  color: var(--gold2);
+  line-height: 1;
+  display: block;
+  animation: omGlow 3s ease-in-out infinite;
+  text-shadow: 0 0 40px rgba(200,150,12,0.5);
+}
+
+@keyframes omGlow {
+  0%,100% { text-shadow: 0 0 30px rgba(200,150,12,0.4); }
+  50% { text-shadow: 0 0 70px rgba(200,150,12,0.8), 0 0 140px rgba(200,150,12,0.3); }
+}
+
+.header-ganesh {
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(0.65rem, 2.5vw, 0.8rem);
+  letter-spacing: 0.3em;
+  color: var(--gold3);
+  text-transform: uppercase;
+  margin-top: 10px;
+  display: block;
+}
+
+/* ── GOLD LINE DIVIDER ── */
+.gold-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 24px auto;
+  max-width: 400px;
+}
+
+.gold-divider-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.gold-divider-diamond {
+  width: 8px; height: 8px;
+  background: var(--gold2);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.gold-divider-sm {
+  width: 5px; height: 5px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ── INVITATION TEXT ── */
+.invite-card {
+  background: rgba(253,246,227,0.05);
+  border: 1px solid rgba(200,150,12,0.2);
+  border-radius: 2px;
+  padding: 28px 28px;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.invite-card::before, .invite-card::after {
+  content: '';
+  position: absolute;
+  width: 24px; height: 24px;
+  border-color: var(--gold2);
+  border-style: solid;
+}
+.invite-card::before { top: 8px; left: 8px; border-width: 1.5px 0 0 1.5px; }
+.invite-card::after { bottom: 8px; right: 8px; border-width: 0 1.5px 1.5px 0; }
+
+.invite-text {
+  color: var(--cream2);
+  font-size: clamp(0.85rem, 3vw, 1rem);
+  line-height: 2.1;
+  font-weight: 300;
+}
+
+/* ── NAMES ── */
+.names-card {
+  background: linear-gradient(135deg, rgba(107,21,21,0.9), rgba(139,26,26,0.95));
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  padding: 32px 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.names-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(200,150,12,0.03) 0, rgba(200,150,12,0.03) 1px,
+    transparent 1px, transparent 8px
+  );
+}
+
+.names-label {
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(0.6rem, 2vw, 0.72rem);
+  letter-spacing: 0.3em;
+  color: var(--gold3);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: block;
+  position: relative;
+}
+
+.name-entry {
+  font-size: clamp(1.3rem, 5vw, 1.7rem);
+  font-weight: 600;
+  color: var(--gold2);
+  display: block;
+  line-height: 1.5;
+  position: relative;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  text-shadow: 0 0 20px rgba(200,150,12,0.3);
+}
+
+.name-entry.shown { opacity: 1; transform: translateX(0); }
+.name-entry:nth-child(2) { transition-delay: 0.15s; }
+.name-entry:nth-child(3) { transition-delay: 0.3s; }
+
+.name-dot {
+  display: block;
+  color: var(--gold);
+  font-size: 0.7rem;
+  margin: 4px 0;
+  opacity: 0.6;
+}
+
+.names-sub {
+  margin-top: 18px;
+  color: var(--cream2);
+  font-size: clamp(0.8rem, 2.8vw, 0.95rem);
+  line-height: 1.8;
+  position: relative;
+}
+
+.names-highlight {
+  color: var(--gold3);
+  font-weight: 600;
+}
+
+/* ── EVENTS ── */
+.events-section {
+  margin-bottom: 20px;
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(0.6rem, 2vw, 0.72rem);
+  letter-spacing: 0.3em;
+  color: var(--gold3);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.event-item {
+  display: flex;
+  gap: 0;
+  margin-bottom: 12px;
+  border: 1px solid rgba(200,150,12,0.25);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.7s ease, transform 0.7s ease, border-color 0.3s ease;
+}
+
+.event-item.shown { opacity: 1; transform: translateX(0); }
+.event-item:nth-child(2) { transition-delay: 0.1s; }
+.event-item:nth-child(3) { transition-delay: 0.2s; }
+.event-item:hover { border-color: var(--gold2); }
+
+.event-item.main-event {
+  border-color: var(--saffron);
+  box-shadow: 0 0 20px rgba(212,98,10,0.15);
+}
+
+.event-date {
+  background: var(--maroon2);
+  min-width: 70px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 14px 10px;
+  flex-shrink: 0;
+}
+
+.event-item.main-event .event-date { background: var(--saffron); }
+
+.event-day-num {
+  font-size: clamp(1.6rem, 6vw, 2rem);
+  font-weight: 700;
+  color: var(--gold2);
+  line-height: 1;
+  display: block;
+}
+
+.event-item.main-event .event-day-num { color: #fff; }
+
+.event-month-text {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--cream2);
+  text-transform: uppercase;
+  display: block;
+  margin-top: 3px;
+}
+
+.event-body {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.event-title {
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  font-weight: 600;
+  color: var(--gold2);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.event-item.main-event .event-title { color: #FFD27A; }
+
+.event-weekday {
+  font-size: clamp(0.68rem, 2.2vw, 0.78rem);
+  color: rgba(253,246,227,0.5);
+  display: block;
+  font-family: 'Crimson Pro', serif;
+  letter-spacing: 0.05em;
+}
+
+.main-badge {
+  display: inline-block;
+  background: rgba(212,98,10,0.2);
+  border: 1px solid var(--saffron);
+  color: #FFD27A;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  text-transform: uppercase;
+  margin-top: 5px;
+  font-family: 'Crimson Pro', serif;
+}
+
+/* ── VENUE ── */
+.venue-card {
+  background: rgba(253,246,227,0.04);
+  border: 1px solid rgba(200,150,12,0.3);
+  padding: 22px 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.venue-pin {
+  font-size: 1.4rem;
+  display: block;
+  margin-bottom: 8px;
+  animation: pinBounce 2s ease-in-out infinite;
+}
+
+@keyframes pinBounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.venue-label {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--gold3);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.venue-name {
+  font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+  font-weight: 600;
+  color: var(--gold2);
+  display: block;
+}
+
+/* ── FAMILY ── */
+.family-card {
+  background: linear-gradient(135deg, rgba(107,21,21,0.6), rgba(139,26,26,0.5));
+  border: 1px solid rgba(200,150,12,0.2);
+  padding: 26px 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.family-text {
+  color: var(--cream2);
+  font-size: clamp(0.82rem, 3vw, 0.95rem);
+  line-height: 2.1;
+}
+
+.family-name {
+  color: var(--gold2);
+  font-size: clamp(1rem, 3.5vw, 1.15rem);
+  font-weight: 600;
+  display: block;
+  margin: 4px 0;
+}
+
+/* ── CLOSING ── */
+.closing {
+  text-align: center;
+  padding: 30px 20px 20px;
+}
+
+.closing-main {
+  color: var(--cream2);
+  font-size: clamp(0.9rem, 3.2vw, 1.05rem);
+  line-height: 2;
+}
+
+.closing-bold {
+  color: var(--gold2);
+  font-weight: 600;
+  font-size: clamp(1rem, 3.5vw, 1.15rem);
+  display: block;
+  margin-top: 8px;
+}
+
+.closing-dots {
+  margin-top: 20px;
+  color: var(--gold);
+  font-size: 1rem;
+  letter-spacing: 0.8em;
+  animation: dotsAnim 2s ease-in-out infinite;
+}
+
+@keyframes dotsAnim {
+  0%,100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ── MANDALA ── */
+#mandala-wrap {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none; z-index: 0;
+  overflow: hidden;
+}
+.mandala-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(200,150,12,0.07);
+}
+.mandala-ring:nth-child(1){ width:260px;height:260px; animation: mandalaRot 40s linear infinite; }
+.mandala-ring:nth-child(2){ width:380px;height:380px; animation: mandalaRot 55s linear infinite reverse; border-style:dashed; }
+.mandala-ring:nth-child(3){ width:500px;height:500px; animation: mandalaRot 70s linear infinite; }
+.mandala-ring:nth-child(4){ width:640px;height:640px; animation: mandalaRot 90s linear infinite reverse; border-color:rgba(200,150,12,0.04); }
+@keyframes mandalaRot { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+
+
+
+/* ── SHIMMER ON NAME ENTRIES ── */
+.name-entry {
+  background: linear-gradient(90deg, var(--gold2) 0%, var(--gold3) 45%, #fff 50%, var(--gold3) 55%, var(--gold2) 100%);
+  background-size: 250%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+@keyframes nameShimmer {
+  0%  { background-position: 200% center; }
+  100%{ background-position: -200% center; }
+}
+.name-entry.shown {
+  opacity: 1; transform: translateX(0);
+  animation: nameShimmer 4s linear infinite;
+}
+
+/* ── RIPPLE ON MAIN EVENT ── */
+.main-event { position: relative; overflow: hidden; }
+.main-event::after {
+  content:'';
+  position: absolute; inset: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: inset 0 0 0 0 rgba(212,98,10,0.3);
+  animation: rippleIn 2.5s ease-in-out infinite;
+}
+@keyframes rippleIn {
+  0%  { box-shadow: inset 0 0 0 0 rgba(212,98,10,0.4); }
+  70% { box-shadow: inset 0 0 0 12px rgba(212,98,10,0); }
+  100%{ box-shadow: inset 0 0 0 0 rgba(212,98,10,0); }
+}
+
+/* ── GLOW PULSE ON NAMES CARD ── */
+.names-card { animation: cardGlow 4s ease-in-out infinite; }
+@keyframes cardGlow {
+  0%,100% { box-shadow: 0 0 10px rgba(200,150,12,0.1); }
+  50%      { box-shadow: 0 0 35px rgba(200,150,12,0.35), 0 0 60px rgba(200,150,12,0.1); }
+}
+
+/* ── FLOATING DIYAS LAYER ── */
+.float-diya {
+  position: fixed;
+  font-size: 1.1rem;
+  animation: floatDiya linear infinite;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(255,140,0,0.7));
+}
+@keyframes floatDiya {
+  0%  { transform: translateY(100vh) rotate(-10deg); opacity: 0; }
+  8%  { opacity: 0.8; }
+  92% { opacity: 0.6; }
+  100%{ transform: translateY(-10vh) rotate(10deg); opacity: 0; }
+}
+
+/* ── BURST PARTICLES ── */
+.burst-dot {
+  position: fixed;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999;
+  animation: burstFly var(--dur,1s) ease-out forwards;
+}
+@keyframes burstFly {
+  0%  { transform: translate(0,0) scale(1); opacity:1; }
+  100%{ transform: translate(var(--tx,0px), var(--ty,0px)) scale(0); opacity:0; }
+}
+
+
+
+.cdown-box {
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 50px;
+}
+.cdown-box span:first-child {
+  font-size: clamp(1.4rem,6vw,2rem);
+  font-weight: 700;
+  color: var(--gold2);
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(200,150,12,0.4);
+}
+.cdown-lbl {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--cream2);
+  opacity: 0.6;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+.cdown-sep {
+  font-size: clamp(1.4rem,6vw,2rem);
+  color: var(--gold);
+  opacity: 0.5;
+  line-height: 1;
+  align-self: flex-start;
+  padding-top: 2px;
+}
+
+/* ── MUSIC BUTTON ── */
+#music-btn {
+  position: fixed;
+  bottom: 24px; right: 20px;
+  z-index: 500;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--maroon2), #3a0a0a);
+  border: 1px solid var(--gold);
+  color: var(--gold2);
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 18px rgba(200,150,12,0.3);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 2s forwards;
+}
+#music-btn:hover {
+  box-shadow: 0 0 32px rgba(200,150,12,0.6);
+  transform: scale(1.1);
+}
+#music-btn.playing {
+  animation: fadeUp 0.8s ease 2s forwards, musicPulse 1.8s ease-in-out infinite;
+}
+@keyframes musicPulse {
+  0%,100% { box-shadow: 0 0 18px rgba(200,150,12,0.3); }
+  50%      { box-shadow: 0 0 36px rgba(200,150,12,0.7), 0 0 60px rgba(200,150,12,0.2); }
+}
+#music-btn .music-bars {
+  display: flex; gap: 3px; align-items: flex-end; height: 18px;
+}
+#music-btn .music-bars span {
+  width: 3px; background: var(--gold2); border-radius: 2px;
+  animation: none;
+}
+#music-btn.playing .music-bars span:nth-child(1){ animation: bar1 0.8s ease-in-out infinite; }
+#music-btn.playing .music-bars span:nth-child(2){ animation: bar2 0.6s ease-in-out infinite 0.1s; }
+#music-btn.playing .music-bars span:nth-child(3){ animation: bar3 0.9s ease-in-out infinite 0.2s; }
+#music-btn.playing .music-bars span:nth-child(4){ animation: bar1 0.7s ease-in-out infinite 0.15s; }
+@keyframes bar1 { 0%,100%{height:4px} 50%{height:16px} }
+@keyframes bar2 { 0%,100%{height:10px} 50%{height:5px} }
+@keyframes bar3 { 0%,100%{height:7px} 50%{height:18px} }
+
+/* ── SHARE BUTTON ── */
+.share-wrap {
+  text-align: center;
+  padding: 10px 20px 60px;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold3);
+  font-family: 'Noto Serif Devanagari', serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.05em;
+}
+
+.share-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--gold);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.share-btn:hover { color: #0D0700; }
+.share-btn:hover::before { transform: translateY(0); }
+
+.share-icon { font-size: 1.1rem; }
+
+/* ── CORNER DECORATIONS ── */
+.corner-deco {
+  position: absolute;
+  width: 30px; height: 30px;
+  pointer-events: none;
+}
+
+.c-tl { top: 10px; left: 10px; border-top: 1.5px solid var(--gold2); border-left: 1.5px solid var(--gold2); }
+.c-tr { top: 10px; right: 10px; border-top: 1.5px solid var(--gold2); border-right: 1.5px solid var(--gold2); }
+.c-bl { bottom: 10px; left: 10px; border-bottom: 1.5px solid var(--gold2); border-left: 1.5px solid var(--gold2); }
+.c-br { bottom: 10px; right: 10px; border-bottom: 1.5px solid var(--gold2); border-right: 1.5px solid var(--gold2); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .page { padding: 12px 10px 40px; }
+  .invite-card { padding: 20px 16px; }
+  .names-card { padding: 24px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── INTRO ── -->
+<div id="intro">
+  <div class="intro-om-wrap">
+    <div class="intro-om">ॐ</div>
+  </div>
+  <div class="intro-sub">श्री गणेशाय नमः</div>
+  <button class="intro-btn" onclick="startInvitation()">निमंत्रण देखें &nbsp;→
+<audio id="bg-music" loop>
+  <source src="maithili-janau-song.mp3" type="audio/mpeg">
+</audio>
+</button>
+</div>
+
+<!-- ── MUSIC BUTTON ── -->
+<button id="music-btn" onclick="toggleMusic()" title="संगीत चालू/बंद">
+  <div class="music-bars">
+    <span style="height:4px"></span>
+    <span style="height:10px"></span>
+    <span style="height:7px"></span>
+    <span style="height:13px"></span>
+  </div>
+</button>
+
+
+
+
+<!-- ── PARTICLES ── -->
+<div id="particles"></div>
+
+<!-- ── MANDALA ── -->
+<div id="mandala-wrap">
+  <div class="mandala-ring"></div>
+  <div class="mandala-ring"></div>
+  <div class="mandala-ring"></div>
+  <div class="mandala-ring"></div>
+</div>
+
+<!-- ── BACKGROUND ── -->
+<div class="bg-pattern"></div>
+<div class="bg-grid"></div>
+
+<!-- ── MAIN CONTENT ── -->
+<div id="main">
+  <div class="page">
+
+    <!-- Header -->
+    <div class="header reveal">
+      <span class="header-om">ॐ</span>
+      <span class="header-ganesh">✦ &nbsp; श्री गणेशाय नमः &nbsp; ✦</span>
+
+      <div class="gold-divider" style="margin-top:20px;">
+        <div class="gold-divider-line"></div>
+        <div class="gold-divider-sm"></div>
+        <div class="gold-divider-diamond"></div>
+        <div class="gold-divider-sm"></div>
+        <div class="gold-divider-line"></div>
+      </div>
+    </div>
+
+    <!-- Invitation Text -->
+    <div class="invite-card reveal" style="transition-delay:0.1s;">
+      <div class="corner-deco c-tl"></div>
+      <div class="corner-deco c-br"></div>
+      <p class="invite-text">
+        ईश्वर की असीम कृपा एवं पूर्वजों के<br>
+        पवित्र आशीर्वाद से हमें हर्ष है कि<br><br>
+        हम आपको सादर आमंत्रित करते हैं —
+      </p>
+    </div>
+
+    <!-- Names -->
+    <div class="names-card reveal" style="transition-delay:0.2s;">
+      <span class="names-label">✦ &nbsp; हमारे सुपुत्र &nbsp; ✦</span>
+      <span class="name-entry" id="name1">आशुतोष कुमार</span>
+      <span class="name-dot">◆</span>
+      <span class="name-entry" id="name2">आयुष कुमार</span>
+      <span class="name-dot">◆</span>
+      <span class="name-entry" id="name3">आरव कुमार</span>
+      <div class="names-sub" style="margin-top:18px;">
+        के पावन<br>
+        <span class="names-highlight">उपनयन संस्कार (जनेऊ संस्कार)</span><br>
+        में आपकी उपस्थिति हेतु
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="gold-divider reveal" style="transition-delay:0.3s;">
+      <div class="gold-divider-line"></div>
+      <div class="gold-divider-sm"></div>
+      <div class="gold-divider-diamond"></div>
+      <div class="gold-divider-sm"></div>
+      <div class="gold-divider-line"></div>
+    </div>
+
+    <!-- Events -->
+    <div class="events-section reveal" style="transition-delay:0.35s;">
+      <div class="section-title">✦ &nbsp; कार्यक्रम विवरण &nbsp; ✦</div>
+
+      <div class="event-item" id="ev1">
+        <div class="event-date">
+          <span class="event-day-num">19</span>
+          <span class="event-month-text">जून 2026</span>
+        </div>
+        <div class="event-body">
+          <span class="event-title">बसकट्टी</span>
+          <span class="event-weekday">शुक्रवार — प्रथम कार्यक्रम</span>
+        </div>
+      </div>
+
+      <div class="event-item" id="ev2">
+        <div class="event-date">
+          <span class="event-day-num">24</span>
+          <span class="event-month-text">जून 2026</span>
+        </div>
+        <div class="event-body">
+          <span class="event-title">कुम्रहम</span>
+          <span class="event-weekday">बुधवार — द्वितीय कार्यक्रम</span>
+        </div>
+      </div>
+
+      <div class="event-item main-event" id="ev3">
+        <div class="event-date">
+          <span class="event-day-num" style="color:#fff;">25</span>
+          <span class="event-month-text">जून 2026</span>
+        </div>
+        <div class="event-body">
+          <span class="event-title">उपनयन संस्कार</span>
+          <span class="event-weekday">गुरुवार — मुख्य कार्यक्रम</span>
+          <span class="main-badge">✦ मुख्य दिन</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="gold-divider reveal" style="transition-delay:0.4s;">
+      <div class="gold-divider-line"></div>
+      <div class="gold-divider-sm"></div>
+      <div class="gold-divider-diamond"></div>
+      <div class="gold-divider-sm"></div>
+      <div class="gold-divider-line"></div>
+    </div>
+
+    <!-- Venue -->
+    <div class="venue-card reveal" style="transition-delay:0.45s;">
+      <div class="corner-deco c-tl"></div>
+      <div class="corner-deco c-tr"></div>
+      <div class="corner-deco c-bl"></div>
+      <div class="corner-deco c-br"></div>
+      <span class="venue-pin">📍</span>
+      <span class="venue-label">स्थान</span>
+      <span class="venue-name">भटोतर, पूर्णिया</span>
+      <div style="margin-top:10px; color:rgba(253,246,227,0.4); font-size:0.75rem; font-family:'Crimson Pro',serif; letter-spacing:0.1em;">बिहार, भारत</div>
+    </div>
+
+    <!-- Divider -->
+    <div class="gold-divider reveal" style="transition-delay:0.5s;">
+      <div class="gold-divider-line"></div>
+      <div class="gold-divider-sm"></div>
+      <div class="gold-divider-diamond"></div>
+      <div class="gold-divider-sm"></div>
+      <div class="gold-divider-line"></div>
+    </div>
+
+    <!-- Family -->
+    <div class="family-card reveal" style="transition-delay:0.55s;">
+      <p class="family-text">
+        श्रद्धेय दादाजी<br>
+        <span class="family-name">श्री सरस्वती रमण झा</span>
+        के सुपौत्रों के इस पवित्र अवसर पर<br>
+        आपकी उपस्थिति एवं आशीर्वाद<br>
+        हमारे लिए अत्यंत महत्वपूर्ण है।
+      </p>
+    </div>
+
+    <!-- Closing -->
+    <div class="closing reveal" style="transition-delay:0.6s;">
+      <div class="gold-divider">
+        <div class="gold-divider-line"></div>
+        <div class="gold-divider-sm"></div>
+        <div class="gold-divider-diamond"></div>
+        <div class="gold-divider-sm"></div>
+        <div class="gold-divider-line"></div>
+      </div>
+      <br>
+      <p class="closing-main">
+        आपका आशीर्वाद ही हमारी शक्ति है
+        <span class="closing-bold">सादर पधारें एवं आशीर्वाद दें 🙏</span>
+      </p>
+
+      <!-- Countdown -->
+      <div id="countdown-wrap" style="margin-top:24px; background:rgba(107,21,21,0.4); border:1px solid rgba(200,150,12,0.3); padding:18px 12px; text-align:center;">
+        <div style="font-family:'Crimson Pro',serif; font-size:0.65rem; letter-spacing:0.3em; color:var(--gold3); text-transform:uppercase; margin-bottom:12px;">✦ &nbsp; मुख्य कार्यक्रम में शेष &nbsp; ✦</div>
+        <div style="display:flex; justify-content:center; gap:16px;">
+          <div class="cdown-box"><span id="cd-days">--</span><span class="cdown-lbl">दिन</span></div>
+          <div class="cdown-sep">:</div>
+          <div class="cdown-box"><span id="cd-hrs">--</span><span class="cdown-lbl">घंटे</span></div>
+          <div class="cdown-sep">:</div>
+          <div class="cdown-box"><span id="cd-min">--</span><span class="cdown-lbl">मिनट</span></div>
+          <div class="cdown-sep">:</div>
+          <div class="cdown-box"><span id="cd-sec">--</span><span class="cdown-lbl">सेकंड</span></div>
+        </div>
+      </div>
+
+      <div class="closing-dots">✦ &nbsp; ✦ &nbsp; ✦</div>
+    </div>
+
+
+
+  </div>
+</div>
+
+<script>
+  // Create particles
+  function createParticles() {
+    const container = document.getElementById('particles');
+    const symbols = ['✿','❋','✾','❃','◆','✦','❀'];
+    const colors = ['rgba(200,150,12,0.7)','rgba(232,184,75,0.6)','rgba(249,217,122,0.5)','rgba(212,98,10,0.5)'];
+    for (let i = 0; i < 25; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.fontSize = (Math.random() * 10 + 6) + 'px';
+      p.style.color = colors[Math.floor(Math.random() * colors.length)];
+      p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+      p.style.animationDelay = (Math.random() * 15) + 's';
+      container.appendChild(p);
+    }
+  }
+
+  createParticles();
+
+  // Floating diyas
+  function createFloatDiyas() {
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 10; i++) {
+      const d = document.createElement('div');
+      d.className = 'float-diya';
+      d.textContent = '🪔';
+      d.style.left = (Math.random() * 95) + 'vw';
+      d.style.animationDuration = (Math.random() * 20 + 18) + 's';
+      d.style.animationDelay = (Math.random() * 20) + 's';
+      container.appendChild(d);
+    }
+  }
+  createFloatDiyas();
+
+  // Burst animation on open
+  function createBurst() {
+    const colors = ['#E8B84B','#F9D97A','#D4620A','#FFD27A','#C8960C'];
+    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    for (let i = 0; i < 40; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'burst-dot';
+      const angle = (i / 40) * 360;
+      const dist = 80 + Math.random() * 200;
+      const tx = Math.cos(angle * Math.PI / 180) * dist;
+      const ty = Math.sin(angle * Math.PI / 180) * dist;
+      dot.style.setProperty('--tx', tx + 'px');
+      dot.style.setProperty('--ty', ty + 'px');
+      dot.style.setProperty('--dur', (0.6 + Math.random() * 0.8) + 's');
+      dot.style.background = colors[i % colors.length];
+      dot.style.left = cx + 'px';
+      dot.style.top = cy + 'px';
+      document.body.appendChild(dot);
+      setTimeout(() => dot.remove(), 1500);
+    }
+  }
+
+  // Start invitation
+  function startInvitation() {
+    createBurst();
+    const intro = document.getElementById('intro');
+    const main = document.getElementById('main');
+    intro.classList.add('hidden');
+    setTimeout(() => {
+      main.classList.add('visible');
+      setTimeout(revealElements, 300);
+    }, 600);
+    // Start music — this runs inside a user gesture click so autoplay is guaranteed
+    startMusic();
+  }
+
+  // Scroll-based reveal
+  function revealElements() {
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('shown');
+          // Trigger name animations when names card is shown
+          if (entry.target.classList.contains('names-card') || entry.target.contains(document.getElementById('name1'))) {
+            setTimeout(() => {
+              ['name1','name2','name3'].forEach((id, i) => {
+                setTimeout(() => {
+                  const el = document.getElementById(id);
+                  if (el) el.classList.add('shown');
+                }, i * 200);
+              });
+            }, 300);
+          }
+          // Event items
+          ['ev1','ev2','ev3'].forEach((id, i) => {
+            const el = document.getElementById(id);
+            if (el && entry.target.contains(el)) {
+              setTimeout(() => el.classList.add('shown'), i * 150);
+            }
+          });
+        }
+      });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Also trigger names + events that are already visible
+    setTimeout(() => {
+      ['name1','name2','name3'].forEach((id, i) => {
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add('shown');
+        }, 800 + i * 200);
+      });
+      ['ev1','ev2','ev3'].forEach((id, i) => {
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add('shown');
+        }, 1200 + i * 150);
+      });
+    }, 100);
+  }
+
+  // Auto-start if no interaction after 5s
+  // Countdown timer — target: 25 June 2026
+  function updateCountdown() {
+    const target = new Date('2026-06-25T06:00:00+05:30').getTime();
+    const now = Date.now();
+    const diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('countdown-wrap').innerHTML = '<div style="color:var(--gold2);font-size:1.1rem;padding:8px;">🙏 आज का शुभ दिन है!</div>';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-hrs').textContent  = String(h).padStart(2,'0');
+    document.getElementById('cd-min').textContent  = String(m).padStart(2,'0');
+    document.getElementById('cd-sec').textContent  = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Auto-start if no interaction after 5s
+  setTimeout(() => {
+    const intro = document.getElementById('intro');
+    if (!intro.classList.contains('hidden')) startInvitation();
+  }, 6000);
+
+  
+// ── SIMPLE AUDIO PLAYER ──
+const bgMusic = document.getElementById('bg-music');
+let musicPlaying = false;
+
+function startMusic() {
+  if (!bgMusic) return;
+
+  bgMusic.volume = 0.7;
+  bgMusic.play()
+    .then(() => {
+      musicPlaying = true;
+      document.getElementById('music-btn').classList.add('playing');
+    })
+    .catch(err => {
+      console.log('Music autoplay blocked:', err);
+    });
+}
+
+function stopMusic() {
+  if (!bgMusic) return;
+
+  bgMusic.pause();
+  bgMusic.currentTime = 0;
+  musicPlaying = false;
+  document.getElementById('music-btn').classList.remove('playing');
+}
+
+function toggleMusic() {
+  if (musicPlaying) {
+    stopMusic();
+  } else {
+    startMusic();
+  }
+}
+</script>
+
+</body>
+</html>
